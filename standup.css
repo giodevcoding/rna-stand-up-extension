@@ -1,0 +1,153 @@
+@font-face {
+  font-family: W95;
+  src: url(./W95FA.otf);
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "W95";
+}
+
+body {
+    background-color: #dedfee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10vh;
+}
+
+.window {
+  width: 75%;
+  height: 75%;
+  padding: 3px;
+}
+
+.old-window-style {
+  background-color: #bdbdbd;
+  box-shadow:
+    0px 2px 0 #2f2f2f,
+    2px 0px 0 #5e5e5e,
+    2px 2px 0 #5e5e5e,
+    0px -2px 0 #efefef,
+    -2px 0px 0 #dedede,
+    -2px 2px 0 #2f2f2f,
+    2px -2px 0 #5e5e5e,
+    -2px -2px 0 #efefef;
+}
+
+.inside-old-window-style {
+  background-color: white;
+  box-shadow:
+    0px -2px 0 #2f2f2f,
+    -2px 0px 0 #5e5e5e,
+    -2px -2px 0 #5e5e5e,
+    0px 2px 0 #efefef,
+    2px 0px 0 #dedede,
+    2px -2px 0 #2f2f2f,
+    -2px 2px 0 #5e5e5e,
+    2px 2px 0 #efefef;
+}
+
+.window-bar {
+  background: linear-gradient(-0.25turn, #77a6e1, #232b76);
+  height: 24px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px;
+}
+
+.window-title-container {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.window-icon {
+    height: 20px;
+    width: 20px;
+}
+
+.window-bar h3 {
+  color: white;
+  font-size: 16px;
+  font-weight: normal;
+  font-size: 16px;
+  margin: 0;
+}
+
+.window-button-container {
+    display: flex;
+    gap: 6px;
+}
+
+.window-button {
+  height: 14px;
+  width: 16px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.window-body {
+    margin: 4px;   
+    padding-top: 20vh;
+    padding-bottom: 20vh;
+}
+
+.window-body h1 {
+    font-family: "Comic Sans MS", "Comic Sans";
+    margin: 0;
+    animation: 0.5s step-end infinite running animate-main-header;
+    font-size: 56px;
+    margin-bottom: 48px;
+    text-align: center;
+}
+
+.window-body p {
+    font-family: "Comic Sans MS", "Comic Sans";
+    margin: 0;
+    font-size: 28px;
+    animation: 3.5s linear infinite alternate-reverse running get-moving;
+}
+
+.main-content {
+    padding: 16px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes animate-main-header {
+    0% {
+        color: red;
+    }
+    20% {
+        color: orange;
+    }
+    40% {
+        color: magenta;
+    }
+    60% {
+        color: blue;
+    }
+    80% {
+        color: indigo;
+    }
+    100% {
+        color: red;
+    }
+}
+
+@keyframes get-moving {
+    from {
+        transform: translateX(20vw);
+    }
+    to {
+        transform: translateX(-20vw);
+    }
+}
