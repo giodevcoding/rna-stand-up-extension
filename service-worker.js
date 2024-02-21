@@ -24,6 +24,8 @@ async function updateAlarm() {
   const alarmTime = await getAlarmTime();
   let deleted = false;
 
+  chrome.storage.local.set({ nextStandupTime: alarmTime.getTime() });
+
   console.log("Alarm Time:", alarmTime);
   console.log("Alarm Already Exists:", standupAlarm != null);
 
@@ -83,7 +85,7 @@ async function getExtensionConfig() {
     minute: 45,
   };
 
-  return defaultExtensionConfig
+  return defaultExtensionConfig;
 }
 
 async function notifyItsStandupTime() {
