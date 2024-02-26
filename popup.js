@@ -12,4 +12,10 @@ async function setStartupTime() {
   standupEl.textContent += timeString;
 }
 
+document.querySelector("#open-button").addEventListener("click", () => {
+  chrome.tabs.create({
+    url: "standup.html",
+  });
+});
+
 setStartupTime();

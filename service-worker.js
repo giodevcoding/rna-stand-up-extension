@@ -11,8 +11,9 @@ const alarmName = "rna-standup-alarm";
 async function init() {
   await updateAlarm();
 
-  chrome.alarms.onAlarm.addListener((alarm) => {
-    if (alarm.name === alarmName) {
+  chrome.alarms.onAlarm.addListener(async (alarm) => {
+    const shouldNotify = await getShouldNotify()
+    if (alarm.name === alarmName && shouldNotify) {
       notifyItsStandupTime();
     }
   });
@@ -20,37 +21,13 @@ async function init() {
 
 /** @returns {Promise<void>} */
 async function updateAlarm() {
-  const standupAlarm = await chrome.alarms.get(alarmName);
   const alarmTime = await getAlarmTime();
-  let deleted = false;
 
   chrome.storage.local.set({ nextStandupTime: alarmTime.getTime() });
 
-  console.log("Alarm Time:", alarmTime);
-  console.log("Alarm Already Exists:", standupAlarm != null);
-
-  if (standupAlarm != null) {
-    const oldAlarmTime = new Date(standupAlarm.scheduledTime);
-
-    // Clear Alarm if it's the wrong time
-    if (
-      alarmTime.getHours() !== oldAlarmTime.getHours() ||
-      alarmTime.getMinutes() !== oldAlarmTime.getMinutes()
-    ) {
-      console.log("Deleting old alarm");
-      await chrome.alarms.clear(alarmName);
-      deleted = true;
-    }
-  }
-
-  if (!standupAlarm || deleted) {
-    console.log("Creating new alarm");
-    // check alarm again to see if it needs to be created
-    await chrome.alarms.create(alarmName, {
-      when: alarmTime.getTime(),
-      periodInMinutes: 1440,
-    });
-  }
+  await chrome.alarms.create(alarmName, {
+    periodInMinutes: 1,
+  });
 }
 
 /** @returns {Promise<Date>} */
@@ -86,6 +63,18 @@ async function getExtensionConfig() {
   };
 
   return defaultExtensionConfig;
+}
+
+/** @returns {Promise<boolean>} */
+async function getShouldNotify() {
+  const alarmTime = await getAlarmTime()
+  const now = new Date();
+
+  if (alarmTime.getHours() === now.getHours() && alarmTime.getMinutes() === now.getMinutes()) {
+    return true;
+  }
+
+  return false
 }
 
 async function notifyItsStandupTime() {
